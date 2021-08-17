@@ -3,7 +3,6 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Globalization;
-using System.Text.RegularExpressions;
 
 namespace redberry
 {
@@ -22,6 +21,7 @@ namespace redberry
                 base.OnMouseWheel(e);
         }
     }
+
     public partial class NumberedRTB : UserControl
     {
         private readonly LineNumberStrip _strip;
@@ -195,22 +195,6 @@ namespace redberry
         /// <summary>
         /// Use this event to look for changes in the line count
         /// </summary>
-
-        private void syntax_highlight()
-        {
-            MatchCollection tensors = Regex.Matches(this._richTextBox.Rtf, "'(?:[^\"'\\\\]|\\\\.)*?'\\.t");
-
-            foreach (Match tensor in tensors)
-            {
-                this._richTextBox.Rtf = this._richTextBox.Rtf.Replace(tensor.Value, @$"\red0\green255\blue0{tensor.Value}\red0\green0\blue0");
-            }
-        }
-
-        private string getColor(int r, int g, int b)
-        {
-            return @$"\red{r}\green{g}\blue{b}";
-        }
-
         private void _richTextBox_TextChanged(object sender, EventArgs e)
         {
             // If word wrap is enabled do not check for line changes as new lines
@@ -220,16 +204,6 @@ namespace redberry
             if (_richTextBox.WordWrap || !_lastLineCount.Equals(_richTextBox.Lines.Length))
             {
                 SetControlWidth();
-            }
-
-            MatchCollection tensors = Regex.Matches(this._richTextBox.Rtf, "'(?:[^\"'\\\\]|\\\\.)*?'\\.t");
-
-            foreach (Match tensor in tensors)
-            {
-                //MessageBox.Show(tensor.Value);
-                //MessageBox.Show(this._richTextBox.Rtf.Replace(tensor.Value, @$"{getColor(0, 255, 0)}{tensor.Value}{getColor(0, 0, 0)}"));
-                //this._richTextBox.Rtf = this._richTextBox.Rtf.Replace(tensor.Value, @$"{getColor(0,255,0)}{tensor.Value}{getColor(0, 0, 0)}");
-                //MessageBox.Show(this._richTextBox.Rtf);
             }
 
             ((tabTag)((TabPage)this.Parent.Parent).Tag).changed = false;

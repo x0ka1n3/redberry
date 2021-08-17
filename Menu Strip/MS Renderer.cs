@@ -1,20 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 using System.Windows.Forms;
 
 namespace redberry
 {
     public class menu_strip_renderer : ToolStripProfessionalRenderer
     {
-        public menu_strip_renderer() : base(new MyColors()) { }
+        public menu_strip_renderer() : base(new menu_strip_colors()) { }
     }
-    public class MyColors : ProfessionalColorTable
+
+    public class menu_strip_colors : ProfessionalColorTable
     {
         public override Color MenuItemSelected
         {

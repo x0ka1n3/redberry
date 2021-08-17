@@ -7,12 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Diagnostics;
 using System.IO;
 using System.Text.RegularExpressions;
 
 namespace redberry
 {
-    public partial class Form1 : Form
+    public partial class Redberry : Form
     {
         private void print_indices(RichTextBox RTB)
         {
@@ -25,12 +26,13 @@ namespace redberry
                 RTB.Rtf = RTB.Rtf.Replace(tensor.Value, tensorReplaced);
             }
         }
+
         private string create_code(RichTextBox RTB)
         {
             string created_code = "";
 
             int lastCarretPos = RTB.SelectionStart;
-            clickedTab.Focus();
+            clicked_tab.Focus();
             for (int n = 0; n < RTB.Text.Length; n++)
             {
                 RTB.SelectionStart = n;
@@ -75,12 +77,6 @@ namespace redberry
         {
             string new_text = text.Replace(@"\alpha", "α").Replace(@"\beta", "β").Replace(@"\gamma", "γ").Replace(@"\delta", "δ").Replace(@"\epsilon", "ε").Replace(@"\zeta", "ζ").Replace(@"\eta", "η").Replace(@"\theta", "θ").Replace(@"\iota", "ι").Replace(@"\kappa", "κ").Replace(@"\lambda", "λ").Replace(@"\mu", "μ").Replace(@"\nu", "ν").Replace(@"\xi", "ξ").Replace(@"\omicron", "ο").Replace(@"\pi", "π").Replace(@"\rho", "ρ").Replace(@"\sigma", "σ").Replace(@"\tau", "τ").Replace(@"\upsilon", "υ").Replace(@"\phi", "φ").Replace(@"\chi", "χ").Replace(@"\psi", "ψ").Replace(@"\omega", "ω").Replace(@"\ALPHA", "Α").Replace(@"\BETA", "Β").Replace(@"\GAMMA", "Γ").Replace(@"\DELTA", "Δ").Replace(@"\EPSILON", "Ε").Replace(@"\ZETA", "Ζ").Replace(@"\ETA", "Η").Replace(@"\THETA", "Θ").Replace(@"\IOTA", "Ι").Replace(@"\KAPPA", "Κ").Replace(@"\LAMBDA", "Λ").Replace(@"\MU", "Μ").Replace(@"\NU", "Ν").Replace(@"\XI", "Ξ").Replace(@"\OMICRON", "Ο").Replace(@"\PI", "Π").Replace(@"\RHO", "Ρ").Replace(@"\SIGMA", "Σ").Replace(@"\TAU", "Τ").Replace(@"\UPSILON", "Υ").Replace(@"\PHI", "Φ").Replace(@"\CHI", "Χ").Replace(@"\PSI", "Ψ").Replace(@"\OMEGA", "Ω");
             return new_text;
-        }
-
-        private void test(object sender, EventArgs e)
-        {
-            getNRTB().RichTextBox.SelectionColor = Color.Red;
-            File.WriteAllText("RTFColored.txt", getNRTB().RichTextBox.Rtf);
         }
     }
 }
