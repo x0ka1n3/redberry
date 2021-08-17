@@ -228,7 +228,7 @@ namespace redberry
             {
                 //MessageBox.Show(tensor.Value);
                 //MessageBox.Show(this._richTextBox.Rtf.Replace(tensor.Value, @$"{getColor(0, 255, 0)}{tensor.Value}{getColor(0, 0, 0)}"));
-                this._richTextBox.Rtf = this._richTextBox.Rtf.Replace(tensor.Value, @$"{getColor(0,255,0)}{tensor.Value}{getColor(0, 0, 0)}");
+                //this._richTextBox.Rtf = this._richTextBox.Rtf.Replace(tensor.Value, @$"{getColor(0,255,0)}{tensor.Value}{getColor(0, 0, 0)}");
                 //MessageBox.Show(this._richTextBox.Rtf);
             }
 

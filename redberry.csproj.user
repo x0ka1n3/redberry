@@ -7,7 +7,7 @@
     <Compile Update="Functions.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="UserControls\NumberedRTBAbo.cs">
+    <Compile Update="UserControls\NumberedRTB.cs">
       <SubType>Component</SubType>
     </Compile>
   </ItemGroup>
