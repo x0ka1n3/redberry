@@ -211,6 +211,7 @@ namespace redberry
             ((tabTag)((TabPage)this.Parent.Parent).Tag).changed = true;
             ((TabPage)this.Parent.Parent).Text = ((TabPage)this.Parent.Parent).Name + "[*]";
 
+            //_richTextBox.Find(_richTextBox.Text, _richTextBox.TextLength, RichTextBoxFinds.None);
 
             _lastLineCount = _richTextBox.Lines.Length;
         }

@@ -46,6 +46,7 @@ namespace redberry
 
         private void close_tab_click(object sender, EventArgs e)
         {
+            Cancel = false;
             DialogResult result = new DialogResult();
             if (((tabTag)clicked_tab.Tag).changed == true)
             {
@@ -61,6 +62,7 @@ namespace redberry
                     opened_tabs_control.TabPages.Remove(clicked_tab);
                     if (opened_tabs_control.TabCount == 0) opened_tabs_control.Visible = false;
                 }
+                else Cancel = true;
             }
             else
             {
