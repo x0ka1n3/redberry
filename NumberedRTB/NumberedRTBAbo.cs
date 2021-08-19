@@ -3,6 +3,8 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Globalization;
+using System.Text.RegularExpressions;
+using System.Linq;
 
 namespace redberry
 {
@@ -206,8 +208,9 @@ namespace redberry
                 SetControlWidth();
             }
 
-            ((tabTag)((TabPage)this.Parent.Parent).Tag).changed = false;
+            ((tabTag)((TabPage)this.Parent.Parent).Tag).changed = true;
             ((TabPage)this.Parent.Parent).Text = ((TabPage)this.Parent.Parent).Name + "[*]";
+
 
             _lastLineCount = _richTextBox.Lines.Length;
         }

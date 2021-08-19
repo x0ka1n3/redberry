@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 
@@ -22,9 +16,8 @@ namespace redberry
             new_NRTB.RichTextBox.AcceptsTab = true;
             new_NRTB.RichTextBox.WordWrap = false;
             new_NRTB.RichTextBox.DetectUrls = false;
-            /*new_NRTB.RichTextBox.SelectionChanged += NRTB_carrets_position_changed;
             new_NRTB.RichTextBox.KeyDown += NRTB_press_enter;
-            new_NRTB.RichTextBox.TextChanged += NRTBTextChanged;*/
+            new_NRTB.RichTextBox.KeyDown += NRTB_input_right_bracket;
             new_tab.Controls.Add(new_NRTB);
 
             new_tab.Tag = new tabTag();
@@ -65,6 +58,7 @@ namespace redberry
                 else fileContent = change_double_slashed_to_greek(fileContent);
 
                 new_tab_button_click(sender, e);
+
                 ((tabTag)opened_tabs_control.SelectedTab.Tag).path = new_file.FileName;
 
                 NumberedRTB new_NRTB = get_active_NRTB();
@@ -78,6 +72,7 @@ namespace redberry
                 opened_tabs_control.SelectedTab.Name = filePath;
 
                 ((tabTag)opened_tabs_control.SelectedTab.Tag).isResult = isResult;
+                ((tabTag)opened_tabs_control.SelectedTab.Tag).changed = false;
             }
         }
     }

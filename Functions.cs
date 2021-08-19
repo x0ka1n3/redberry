@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using System.IO;
 using System.Text.RegularExpressions;
+using Microsoft.Win32;
 
 namespace redberry
 {
@@ -19,7 +20,7 @@ namespace redberry
         {
             MatchCollection tensors = Regex.Matches(RTB.Rtf, "'(?:[^\"'\\\\]|\\\\.)*?'\\.t");
             string tensorReplaced;
-
+            
             foreach (Match tensor in tensors)
             {
                 tensorReplaced = tensor.Value.Replace("_\\{", "\\dn6\\fs32 \\v0").Replace("^\\{", "\\up22\\fs32 \\v0").Replace("\\}", "\\up0\\fs41 \\v0");

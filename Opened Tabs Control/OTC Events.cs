@@ -25,7 +25,9 @@ namespace redberry
                 for (int i = 0; i < opened_tabs_control.TabCount; i++)
                     if (opened_tabs_control.GetTabRect(i).Contains(e.Location))
                         clicked_tab = opened_tabs_control.TabPages[i];
-                tab_context_menu.Show(opened_tabs_control, e.Location);
+                
+                if (((tabTag)opened_tabs_control.SelectedTab.Tag).isResult == true) result_context_menu.Show(opened_tabs_control, e.Location);
+                else code_context_menu.Show(opened_tabs_control, e.Location);
             }
         }
     }

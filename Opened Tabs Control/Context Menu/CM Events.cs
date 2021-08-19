@@ -16,7 +16,7 @@ namespace redberry
     {
         private void run_code_click(object sender, EventArgs e)
         {
-            if ((opened_tabs_control.TabPages.Count > 0) && ((tabTag)opened_tabs_control.SelectedTab.Tag).path != "") ;
+            if (((tabTag)opened_tabs_control.SelectedTab.Tag).path != "")
             {
                 string filePath = ((tabTag)opened_tabs_control.SelectedTab.Tag).path;
                 string fileName = Path.GetFileNameWithoutExtension(filePath);
@@ -47,7 +47,7 @@ namespace redberry
         private void close_tab_click(object sender, EventArgs e)
         {
             DialogResult result = new DialogResult();
-            if (((tabTag)clicked_tab.Tag).changed == false)
+            if (((tabTag)clicked_tab.Tag).changed == true)
             {
                 result = MessageBox.Show("Файл не был сохранен. Сохранить изменения?", "Несохраненные изменения", MessageBoxButtons.YesNoCancel);
                 if (result == DialogResult.Yes)
@@ -109,6 +109,16 @@ namespace redberry
                         ((tabTag)clicked_tab.Tag).path = fileName;
                     }
                 }
+            }
+        }
+
+        private void change_isResult(object sender, EventArgs e)
+        {
+            DialogResult result = new DialogResult();
+            result = MessageBox.Show("Вы уверены, что хотите поменять статус вкладки?", clicked_tab.Text, MessageBoxButtons.YesNo);
+            if (result == DialogResult.Yes)
+            {
+                ((tabTag)opened_tabs_control.SelectedTab.Tag).isResult ^= true;
             }
         }
     }

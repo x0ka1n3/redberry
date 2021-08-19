@@ -30,7 +30,7 @@ namespace redberry
             resize_all_NRTBs();
         }
 
-        private NumberedRTB get_active_NRTB()
+        public NumberedRTB get_active_NRTB()
         {
             NumberedRTB new_NRTB = new NumberedRTB();
             foreach (Control control in opened_tabs_control.SelectedTab.Controls)

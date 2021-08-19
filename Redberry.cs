@@ -29,7 +29,8 @@ namespace redberry
             load_menu_strip();
             load_index_buttons();
             load_opened_tabs_control();
-            load_tab_context_menu();
+            load_code_context_menu();
+            load_result_context_menu();
             load_greek_alphabet();
 
             reposition_greek_alphabet();
