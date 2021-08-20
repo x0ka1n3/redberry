@@ -4,7 +4,6 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Globalization;
 using System.Text.RegularExpressions;
-using System.Linq;
 
 namespace redberry
 {
