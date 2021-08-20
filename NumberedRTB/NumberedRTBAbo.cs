@@ -197,6 +197,7 @@ namespace redberry
         /// <summary>
         /// Use this event to look for changes in the line count
         /// </summary>
+        string[] keywords = { "use" };
         private void _richTextBox_TextChanged(object sender, EventArgs e)
         {
             // If word wrap is enabled do not check for line changes as new lines
@@ -211,9 +212,32 @@ namespace redberry
             ((tabTag)((TabPage)this.Parent.Parent).Tag).changed = true;
             ((TabPage)this.Parent.Parent).Text = ((TabPage)this.Parent.Parent).Name + "[*]";
 
-            //_richTextBox.Find(_richTextBox.Text, _richTextBox.TextLength, RichTextBoxFinds.None);
+            foreach (string keyword in keywords)
+            {
+                Regex regExp = new Regex($@"\b({keyword})\b");
+                int index = _richTextBox.SelectionStart;
 
-            _lastLineCount = _richTextBox.Lines.Length;
+                _richTextBox.Enabled = false;
+
+                _richTextBox.SelectAll();
+                _richTextBox.SelectionColor = Color.Black;
+
+                _richTextBox.SelectionStart = index;
+
+                foreach (Match match in regExp.Matches(_richTextBox.Text))
+                {
+                    _richTextBox.Select(match.Index, match.Length);
+                    _richTextBox.SelectionColor = Color.Blue;
+
+                    _richTextBox.SelectionStart = index;
+                    _richTextBox.SelectionLength = 0;
+                    _richTextBox.SelectionColor = Color.Black;
+                }
+                _richTextBox.Enabled = true;
+                _richTextBox.Focus();
+
+                _lastLineCount = _richTextBox.Lines.Length;
+            }
         }
 
         protected override void OnForeColorChanged(EventArgs e)
