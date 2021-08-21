@@ -1,12 +1,53 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Windows.Forms;
 using System.Text.RegularExpressions;
-
+using System.Collections.Generic;
+using System.Drawing;
 namespace redberry
 {
     public partial class Redberry : Form
     {
-        private void print_indices(RichTextBox RTB)
+        public void syntax_highlight_toggle(object sender, EventArgs e)
         {
+            CustomRichTextBox RTB = new CustomRichTextBox();
+
+            foreach (TabPage tab in opened_tabs_control.TabPages)
+            {
+                foreach (Control control in tab.Controls)
+                    if (control.GetType() == typeof(NumberedRTB)) RTB = ((NumberedRTB)control).RichTextBox;
+
+
+                if (syntax_highlight_button.Checked)
+                {
+                    RTB.syntax_highlight(null, null);
+                    RTB.highlightOn();
+                }
+
+                else
+                {
+                    RTB.highlightOff();
+                    opened_tabs_control.Focus();
+                    int index = RTB.SelectionStart;
+                    RTB.SelectAll();
+                    RTB.SelectionColor = Color.Black;
+                    RTB.SelectionStart = index;
+                    RTB.SelectionLength = 0;
+                    RTB.Focus();
+                }
+            }
+        }
+
+        private void print_indices(CustomRichTextBox RTB)
+        {
+            RTB.highlightOff();
+            opened_tabs_control.Focus();
+            int index = RTB.SelectionStart;
+            RTB.SelectAll();
+            RTB.SelectionColor = Color.Black;
+            RTB.SelectionStart = index;
+            RTB.SelectionLength = 0;
+            RTB.Focus();
+
             MatchCollection tensors = Regex.Matches(RTB.Rtf, "'(?:[^\"'\\\\]|\\\\.)*?'\\.t");
             string tensorReplaced;
             
@@ -15,6 +56,8 @@ namespace redberry
                 tensorReplaced = tensor.Value.Replace("_\\{", "\\dn6\\fs32 \\v0").Replace("^\\{", "\\up22\\fs32 \\v0").Replace("\\}", "\\up0\\fs41 \\v0");
                 RTB.Rtf = RTB.Rtf.Replace(tensor.Value, tensorReplaced);
             }
+            RTB.highlightOn();
+            RTB.syntax_highlight(null, null);
         }
 
         private string create_code(RichTextBox RTB)

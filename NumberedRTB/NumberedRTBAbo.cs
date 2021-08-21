@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Globalization;
 using System.Text.RegularExpressions;
+using System.Collections.Generic;
 
 namespace redberry
 {
@@ -21,6 +22,115 @@ namespace redberry
             else
                 base.OnMouseWheel(e);
         }
+
+        Dictionary<string, Color> keywords = new Dictionary<string, Color>()
+        {
+            { "use", Color.Blue },
+            { "def", Color.Blue },
+            { "assert", Color.Blue },
+            { "for", Color.Blue },
+            { "println", Color.Blue },
+            { "import", Color.Blue },
+            { "as", Color.Blue },
+            { "Grab", Color.Blue },
+
+            { "static", Color.BlueViolet },
+            { "Expand", Color.BlueViolet },
+            { "EliminateMetrics", Color.BlueViolet },
+            { "Differentiate", Color.BlueViolet },
+            { "Collect", Color.BlueViolet },
+            { "CollectScalars", Color.BlueViolet },
+            { "CollectNonScalars", Color.BlueViolet },
+            { "Conjugate", Color.BlueViolet },
+            { "Denominator", Color.BlueViolet },
+            { "DiracSimplify", Color.BlueViolet },
+            { "DiracOrder", Color.BlueViolet },
+            { "DiracTrace", Color.BlueViolet },
+            { "EliminateDueSymmetries", Color.BlueViolet },
+            { "ExpandAndEliminate", Color.BlueViolet },
+            { "ExpandAll", Color.BlueViolet },
+            { "ExpandDenominator", Color.BlueViolet },
+            { "ExpandNumerator", Color.BlueViolet },
+            { "ExpandTensors", Color.BlueViolet },
+            { "FullyAntiSymmetrize", Color.BlueViolet },
+            { "FullySymmetrize", Color.BlueViolet },
+            { "Factor", Color.BlueViolet },
+            { "Identity", Color.BlueViolet },
+            { "InvertIndices", Color.BlueViolet },
+            { "LeviCivitaSimplify", Color.BlueViolet },
+            { "Numerator", Color.BlueViolet },
+            { "Numeric", Color.BlueViolet },
+            { "PowerExpand", Color.BlueViolet },
+            { "PowerUnfold", Color.BlueViolet },
+            { "Reverse", Color.BlueViolet },
+            { "SpinorsSimplify", Color.BlueViolet },
+            { "Symmetrize", Color.BlueViolet },
+            { "Together", Color.BlueViolet },
+            { "UnitarySimplify", Color.BlueViolet },
+            { "UnitaryTrace", Color.BlueViolet },
+
+            { "Redberry", Color.DarkRed },
+            { "RedberryPhysics", Color.DarkRed },
+            { "RedberryStatic", Color.DarkRed },
+        };
+
+        Dictionary<string, Color> key_objects = new Dictionary<string, Color>()
+        {
+            {"\\.t", Color.DarkRed },
+            {"\\.mapping", Color.DarkRed },
+            {"\\.si", Color.DarkRed },
+            {"\\.indices", Color.DarkRed },
+        };
+
+        public void syntax_highlight(object sender, EventArgs e)
+        {
+            this.TextChanged -= ((NumberedRTB)this.Parent).Strip._richTextBox_TextChanged;
+            this.Parent.Parent.Focus();
+            int index = this.SelectionStart;
+
+            this.SelectAll();
+            this.SelectionColor = Color.Black;
+
+            foreach (var keyword in keywords)
+            {
+                Regex regExp = new Regex($@"\b({keyword.Key})\b");
+
+                this.SelectionStart = index;
+
+                foreach (Match match in regExp.Matches(this.Text))
+                {
+                    this.Select(match.Index, match.Length);
+                    this.SelectionColor = keyword.Value;
+
+                    this.SelectionStart = index;
+                    this.SelectionLength = 0;
+                    this.SelectionColor = Color.Black;
+                }
+            }
+
+            foreach (var key_object in key_objects)
+            {
+                Regex regExp = new Regex($@"({key_object.Key})\b");
+
+                this.SelectionStart = index;
+
+                foreach (Match match in regExp.Matches(this.Text))
+                {
+                    this.Select(match.Index, match.Length);
+                    this.SelectionColor = key_object.Value;
+
+                    this.SelectionStart = index;
+                    this.SelectionLength = 0;
+                    this.SelectionColor = Color.Black;
+                }
+            }
+
+            this.TextChanged += ((NumberedRTB)this.Parent).Strip._richTextBox_TextChanged;
+            this.Focus();
+        }
+
+        public void highlightOn() => this.TextChanged += syntax_highlight;
+        public void highlightOff() => this.TextChanged -= syntax_highlight;
     }
 
     public partial class NumberedRTB : UserControl
@@ -36,7 +146,7 @@ namespace redberry
             base.BackColor = richTextBox.BackColor;
         }
 
-        public RichTextBox RichTextBox
+        public CustomRichTextBox RichTextBox
         {
             get { return richTextBox; }
         }
@@ -196,13 +306,65 @@ namespace redberry
         /// <summary>
         /// Use this event to look for changes in the line count
         /// </summary>
-        string[] keywords = { "use" };
+        //string[] keywords = { "use", "def", "for", "println", "import", "Grab" };
+        /*Dictionary<string, Color> keywords = new Dictionary<string, Color>()
+        {
+            { "use", Color.Blue },
+            { "def", Color.Blue },
+            { "assert", Color.Blue },
+            { "for", Color.Blue },
+            { "println", Color.Blue },
+            { "import", Color.Blue },
+            { "as", Color.Blue },
+            { "Grab", Color.Blue },
+
+            { "static", Color.BlueViolet },
+            { "Expand", Color.BlueViolet },
+            { "EliminateMetrics", Color.BlueViolet },
+            { "Differentiate", Color.BlueViolet },
+            { "Collect", Color.BlueViolet },
+            { "CollectScalars", Color.BlueViolet },
+            { "CollectNonScalars", Color.BlueViolet },
+            { "Conjugate", Color.BlueViolet },
+            { "Denominator", Color.BlueViolet },
+            { "DiracSimplify", Color.BlueViolet },
+            { "DiracOrder", Color.BlueViolet },
+            { "DiracTrace", Color.BlueViolet },
+            { "EliminateDueSymmetries", Color.BlueViolet },
+            { "ExpandAndEliminate", Color.BlueViolet },
+            { "ExpandAll", Color.BlueViolet },
+            { "ExpandDenominator", Color.BlueViolet },
+            { "ExpandNumerator", Color.BlueViolet },
+            { "ExpandTensors", Color.BlueViolet },
+            { "FullyAntiSymmetrize", Color.BlueViolet },
+            { "FullySymmetrize", Color.BlueViolet },
+            { "Factor", Color.BlueViolet },
+            { "Identity", Color.BlueViolet },
+            { "InvertIndices", Color.BlueViolet },
+            { "LeviCivitaSimplify", Color.BlueViolet },
+            { "Numerator", Color.BlueViolet },
+            { "Numeric", Color.BlueViolet },
+            { "PowerExpand", Color.BlueViolet },
+            { "PowerUnfold", Color.BlueViolet },
+            { "Reverse", Color.BlueViolet },
+            { "SpinorsSimplify", Color.BlueViolet },
+            { "Symmetrize", Color.BlueViolet },
+            { "Together", Color.BlueViolet },
+            { "UnitarySimplify", Color.BlueViolet },
+            { "UnitaryTrace", Color.BlueViolet },
+
+            { "Redberry", Color.DarkRed },
+            { "RedberryPhysics", Color.DarkRed },
+            { "RedberryStatic", Color.DarkRed },
+
+            {"\\.t", Color.Red },
+            {"\\.mapping", Color.Red },
+            {"\\.si", Color.Red },
+            {"\\.indices", Color.Red },
+        };
+
         private void _richTextBox_TextChanged(object sender, EventArgs e)
         {
-            // If word wrap is enabled do not check for line changes as new lines
-            // from word wrapping will not raise the line changed event
-
-            // Last line count is always equal to current when words are wrapped
             if (_richTextBox.WordWrap || !_lastLineCount.Equals(_richTextBox.Lines.Length))
             {
                 SetControlWidth();
@@ -211,32 +373,48 @@ namespace redberry
             ((tabTag)((TabPage)this.Parent.Parent).Tag).changed = true;
             ((TabPage)this.Parent.Parent).Text = ((TabPage)this.Parent.Parent).Name + "[*]";
 
-            foreach (string keyword in keywords)
+            this.Parent.Parent.Focus();
+            int index = _richTextBox.SelectionStart;
+
+            _richTextBox.SelectAll();
+            _richTextBox.SelectionColor = Color.Black;
+
+            foreach (var keyword in keywords)
             {
-                Regex regExp = new Regex($@"\b({keyword})\b");
-                int index = _richTextBox.SelectionStart;
-
-                _richTextBox.Enabled = false;
-
-                _richTextBox.SelectAll();
-                _richTextBox.SelectionColor = Color.Black;
+                Regex regExp = new Regex($"\\b({keyword.Key})\\b");
+                //MessageBox.Show(regExp.ToString());
+                //MessageBox.Show($"{keyword.Key}\n{"'(?:[^\"'\\\\]|\\\\.)*?'\\.t"}");
 
                 _richTextBox.SelectionStart = index;
 
                 foreach (Match match in regExp.Matches(_richTextBox.Text))
                 {
+                    //MessageBox.Show(match.Value);
                     _richTextBox.Select(match.Index, match.Length);
-                    _richTextBox.SelectionColor = Color.Blue;
+                    _richTextBox.SelectionColor = keyword.Value;
 
                     _richTextBox.SelectionStart = index;
                     _richTextBox.SelectionLength = 0;
                     _richTextBox.SelectionColor = Color.Black;
                 }
-                _richTextBox.Enabled = true;
-                _richTextBox.Focus();
-
-                _lastLineCount = _richTextBox.Lines.Length;
             }
+            _richTextBox.Focus();
+            _lastLineCount = _richTextBox.Lines.Length;
+        }*/
+
+        
+
+        public void _richTextBox_TextChanged(object sender, EventArgs e)
+        {
+            if (_richTextBox.WordWrap || !_lastLineCount.Equals(_richTextBox.Lines.Length))
+            {
+                SetControlWidth();
+            }
+
+            ((tabTag)((TabPage)this.Parent.Parent).Tag).changed = true;
+            ((TabPage)this.Parent.Parent).Text = ((TabPage)this.Parent.Parent).Name + "[*]";
+
+            _lastLineCount = _richTextBox.Lines.Length;
         }
 
         protected override void OnForeColorChanged(EventArgs e)

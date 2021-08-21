@@ -33,6 +33,7 @@ namespace redberry
         public NumberedRTB get_active_NRTB()
         {
             NumberedRTB new_NRTB = new NumberedRTB();
+
             foreach (Control control in opened_tabs_control.SelectedTab.Controls)
                 if (control.GetType() == typeof(NumberedRTB))
                 {

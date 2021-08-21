@@ -18,6 +18,9 @@ namespace redberry
             new_NRTB.RichTextBox.DetectUrls = false;
             new_NRTB.RichTextBox.KeyDown += NRTB_press_enter;
             new_NRTB.RichTextBox.KeyDown += NRTB_input_right_bracket;
+
+            if (syntax_highlight_button.Checked) new_NRTB.RichTextBox.TextChanged += new_NRTB.RichTextBox.syntax_highlight;
+
             new_tab.Controls.Add(new_NRTB);
 
             new_tab.Tag = new tabTag();

@@ -15,8 +15,9 @@ namespace redberry
         ToolStripMenuItem open_code_button = new ToolStripMenuItem("Программа");
         ToolStripMenuItem open_result_button = new ToolStripMenuItem("Результат");
         ToolStripMenuItem open_greek_alphabet_button = new ToolStripMenuItem("Греческий алфавит") { Checked = true, CheckOnClick = true };
+        ToolStripMenuItem syntax_highlight_button = new ToolStripMenuItem("Подсветка кода") { Checked = false, CheckOnClick = true };
 
-        Panel menu_strip_line = new Panel();
+Panel menu_strip_line = new Panel();
 
         #endregion
 
@@ -30,6 +31,8 @@ namespace redberry
             open_file_strip.DropDownItems.Add(open_result_button);
 
             view_strip.DropDownItems.Add(open_greek_alphabet_button);
+            view_strip.DropDownItems.Add(syntax_highlight_button);
+
             menu_strip.Items.Add(file_strip);
             menu_strip.Items.Add(view_strip);
             menu_strip.Location = new Point(0, 0);
@@ -39,6 +42,7 @@ namespace redberry
             open_code_button.Click += (sender, e) => open_button_click(sender, e, false);
             open_result_button.Click += (sender, e) => open_button_click(sender, e, true);
             open_greek_alphabet_button.Click += open_greek_alphabet_button_click;
+            syntax_highlight_button.Click += syntax_highlight_toggle;
 
             this.Controls.Add(menu_strip);
 
