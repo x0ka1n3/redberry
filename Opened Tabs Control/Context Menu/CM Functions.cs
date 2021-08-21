@@ -22,7 +22,6 @@ namespace redberry
             code_context_menu.Items.Add("Сохранить как...", null, (sender, e) => save_file_click(sender, e, false));
             code_context_menu.Items.Add("Закрыть", null, close_tab_click);
             code_context_menu.Items.Add("Программа", null, change_isResult);
-            //code_context_menu.Items.Add("test", null, test);
         }
 
         private void load_result_context_menu()
@@ -31,20 +30,6 @@ namespace redberry
             result_context_menu.Items.Add("Сохранить как...", null, (sender, e) => save_file_click(sender, e, false));
             result_context_menu.Items.Add("Закрыть", null, close_tab_click);
             result_context_menu.Items.Add("Результат", null, change_isResult);
-        }
-
-        void test(object sender, EventArgs e)
-        {
-            NumberedRTB nrtb = get_active_NRTB();
-
-            //MatchCollection tensors = Regex.Matches(nrtb.RichTextBox.Text, "'(?:[^\"'\\\\]|\\\\.)*?'\\.t");
-            MatchCollection tensors = Regex.Matches(nrtb.RichTextBox.Text, "use");
-            
-            foreach (Match tensor in tensors)
-            {
-                
-            }
-            File.WriteAllText("rtf.txt", nrtb.RichTextBox.Rtf);
         }
     }
 }
