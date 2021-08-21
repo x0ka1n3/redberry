@@ -39,7 +39,9 @@ namespace redberry
 
         private void print_indices(CustomRichTextBox RTB)
         {
-            RTB.highlightOff();
+            if (syntax_highlight_button.Checked)
+                RTB.highlightOff();
+
             opened_tabs_control.Focus();
             int index = RTB.SelectionStart;
             RTB.SelectAll();
@@ -56,8 +58,11 @@ namespace redberry
                 tensorReplaced = tensor.Value.Replace("_\\{", "\\dn6\\fs32 \\v0").Replace("^\\{", "\\up22\\fs32 \\v0").Replace("\\}", "\\up0\\fs41 \\v0");
                 RTB.Rtf = RTB.Rtf.Replace(tensor.Value, tensorReplaced);
             }
-            RTB.highlightOn();
-            RTB.syntax_highlight(null, null);
+            if (syntax_highlight_button.Checked)
+            {
+                RTB.highlightOn();
+                RTB.syntax_highlight(null, null);
+            }
         }
 
         private string create_code(RichTextBox RTB)
