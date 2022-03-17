@@ -8,16 +8,19 @@ namespace redberry
         #region variables and controls
 
         MenuStrip menu_strip = new MenuStrip();
-        ToolStripMenuItem file_strip = new ToolStripMenuItem("Файл");
-        ToolStripMenuItem view_strip = new ToolStripMenuItem("Вид");
-        ToolStripMenuItem new_tab_button = new ToolStripMenuItem("Создать файл");
-        ToolStripMenuItem open_file_strip = new ToolStripMenuItem("Открыть файл");
-        ToolStripMenuItem open_code_button = new ToolStripMenuItem("Программа");
-        ToolStripMenuItem open_result_button = new ToolStripMenuItem("Результат");
-        ToolStripMenuItem open_greek_alphabet_button = new ToolStripMenuItem("Греческий алфавит") { Checked = true, CheckOnClick = true };
-        ToolStripMenuItem syntax_highlight_button = new ToolStripMenuItem("Подсветка кода") { Checked = false, CheckOnClick = true };
+        ToolStripMenuItem file_strip = new ToolStripMenuItem(file_strip_name[language]);
+        ToolStripMenuItem view_strip = new ToolStripMenuItem(view_strip_name[language]);
+        ToolStripMenuItem language_strip = new ToolStripMenuItem("Language");
+        ToolStripMenuItem new_tab_button = new ToolStripMenuItem(new_tab_button_name[language]);
+        ToolStripMenuItem open_file_strip = new ToolStripMenuItem(open_file_strip_name[language]);
+        ToolStripMenuItem open_code_button = new ToolStripMenuItem(open_code_button_name[language]);
+        ToolStripMenuItem open_result_button = new ToolStripMenuItem(open_result_button_name[language]);
+        ToolStripMenuItem open_greek_alphabet_button = new ToolStripMenuItem(open_greek_alphabet_button_name[language]) { Checked = true, CheckOnClick = true };
+        ToolStripMenuItem syntax_highlight_button = new ToolStripMenuItem(syntax_highlight_button_name[language]) { Checked = true, CheckOnClick = true };
+        ToolStripMenuItem english_language_button = new ToolStripMenuItem("English") { Checked = true, CheckOnClick = false };
+        ToolStripMenuItem russian_language_button = new ToolStripMenuItem("Russian") { Checked = false, CheckOnClick = false };
 
-Panel menu_strip_line = new Panel();
+        Panel menu_strip_line = new Panel();
 
         #endregion
 
@@ -33,8 +36,12 @@ Panel menu_strip_line = new Panel();
             view_strip.DropDownItems.Add(open_greek_alphabet_button);
             view_strip.DropDownItems.Add(syntax_highlight_button);
 
+            language_strip.DropDownItems.Add(english_language_button);
+            language_strip.DropDownItems.Add(russian_language_button);
+
             menu_strip.Items.Add(file_strip);
             menu_strip.Items.Add(view_strip);
+            menu_strip.Items.Add(language_strip);
             menu_strip.Location = new Point(0, 0);
             menu_strip.BackColor = Color.FromArgb(242, 242, 242);
 
@@ -43,15 +50,17 @@ Panel menu_strip_line = new Panel();
             open_result_button.Click += (sender, e) => open_button_click(sender, e, true);
             open_greek_alphabet_button.Click += open_greek_alphabet_button_click;
             syntax_highlight_button.Click += syntax_highlight_toggle;
+            english_language_button.Click += (sender, e) => change_language(sender, e, 0);
+            russian_language_button.Click += (sender, e) => change_language(sender, e, 1);
 
-            this.Controls.Add(menu_strip);
+            Controls.Add(menu_strip);
 
-            menu_strip_line.Size = new Size(this.Width, menu_strip.Height / 5);
+            menu_strip_line.Size = new Size(Width, menu_strip.Height / 5);
             menu_strip_line.Location = new Point(0, 6 * menu_strip.Height / 5 - 1);
             menu_strip_line.BackColor = Color.FromArgb(214, 214, 214);
             menu_strip_line.Visible = true;
 
-            this.Controls.Add(menu_strip_line);
+            Controls.Add(menu_strip_line);
         }
     }
 }

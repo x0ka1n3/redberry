@@ -19,7 +19,7 @@ namespace redberry
             opened_tabs_control.Selecting += opened_tabs_control_selecting;
             opened_tabs_control.MouseClick += open_tab_context_menu;
 
-            this.Controls.Add(opened_tabs_control);
+            Controls.Add(opened_tabs_control);
         }
 
         private void reposition_opened_tabs_control()
@@ -32,12 +32,10 @@ namespace redberry
 
         public NumberedRTB get_active_NRTB()
         {
-            NumberedRTB new_NRTB = new NumberedRTB();
-
             foreach (Control control in opened_tabs_control.SelectedTab.Controls)
                 if (control.GetType() == typeof(NumberedRTB))
                 {
-                    new_NRTB = (NumberedRTB)control;
+                    NumberedRTB new_NRTB = (NumberedRTB)control;
                     return new_NRTB;
                 }
             return null;

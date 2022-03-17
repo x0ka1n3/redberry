@@ -18,7 +18,7 @@ namespace redberry
 
             checkbox.CheckedChanged += button_checkbox_checked;
 
-            this.Controls.Add(checkbox);
+            Controls.Add(checkbox);
         }
 
         private void load_greek_button(Button button)
@@ -33,7 +33,7 @@ namespace redberry
 
             button.Click += greek_letter_click;
             
-            this.Controls.Add(button);
+            Controls.Add(button);
         }
     }
 }

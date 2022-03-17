@@ -10,38 +10,41 @@ namespace redberry
         private void run_code_click(object sender, EventArgs e)
         {
             save_file_click(null, null, true);
-            string filePath = ((tabTag)opened_tabs_control.SelectedTab.Tag).path;
-            string fileName = Path.GetFileNameWithoutExtension(filePath);
-            var proc = new Process();
-            var startInfo = new ProcessStartInfo("cmd.exe", $"/C groovy \"{filePath}\"");
-            startInfo.CreateNoWindow = true;
-            startInfo.RedirectStandardOutput = true;
-            proc.StartInfo = startInfo;
 
-            proc.Start();
-            string output = proc.StandardOutput.ReadToEnd();
-            proc.WaitForExit();
+            if (((tabTag)opened_tabs_control.SelectedTab.Tag).path != "")
+            {
+                string filePath = ((tabTag)opened_tabs_control.SelectedTab.Tag).path;
+                string fileName = Path.GetFileNameWithoutExtension(filePath);
+                var proc = new Process();
+                var startInfo = new ProcessStartInfo("cmd.exe", $"/C groovy \"{filePath}\"");
+                startInfo.CreateNoWindow = true;
+                startInfo.RedirectStandardOutput = true;
+                proc.StartInfo = startInfo;
 
-            output = output.Replace("    ", "\t");
-            new_tab_button_click(null, null);
+                proc.Start();
+                string output = proc.StandardOutput.ReadToEnd();
+                proc.WaitForExit();
 
-            NumberedRTB new_NRTB = get_active_NRTB();
-            new_NRTB.RichTextBox.Text = change_slashed_to_greek(output);
+                output = output.Replace("    ", "\t");
+                new_tab_button_click(null, null);
 
-            opened_tabs_control.SelectedTab.Name = $"result of {fileName}";
-            opened_tabs_control.SelectedTab.Text = opened_tabs_control.SelectedTab.Name;
+                NumberedRTB new_NRTB = get_active_NRTB();
+                new_NRTB.RichTextBox.Text = change_slashed_to_greek(output);
 
-            ((tabTag)opened_tabs_control.SelectedTab.Tag).changed = false;
-            ((tabTag)opened_tabs_control.SelectedTab.Tag).isResult = true;
+                opened_tabs_control.SelectedTab.Name = $"{result_of_name[language]} {fileName}";
+                opened_tabs_control.SelectedTab.Text = opened_tabs_control.SelectedTab.Name;
+
+                ((tabTag)opened_tabs_control.SelectedTab.Tag).changed = false;
+                ((tabTag)opened_tabs_control.SelectedTab.Tag).isResult = true;
+            }
         }
 
         private void close_tab_click(object sender, EventArgs e)
         {
             Cancel = false;
-            DialogResult result = new DialogResult();
             if (((tabTag)clicked_tab.Tag).changed == true)
             {
-                result = MessageBox.Show("Файл не был сохранен. Сохранить изменения?", "Несохраненные изменения", MessageBoxButtons.YesNoCancel);
+                DialogResult result = MessageBox.Show(close_tab_message[language], close_tab_messagebox_name[language], MessageBoxButtons.YesNoCancel);
                 if (result == DialogResult.Yes)
                 {
                     save_file_click(null, null, true);
@@ -66,7 +69,7 @@ namespace redberry
         {
             NumberedRTB new_NRTB = get_active_NRTB();
 
-            if (flag && ((tabTag)clicked_tab.Tag).path != null)
+            if (flag && (((tabTag)clicked_tab.Tag).path != null))
             {
                 using (StreamWriter writer = new StreamWriter(((tabTag)clicked_tab.Tag).path))
                 {
@@ -91,7 +94,7 @@ namespace redberry
                         {
                             writer.Write(change_greek_to_double_slashed(create_code(new_NRTB.RichTextBox)));
                         }
-                        clicked_tab.Text = new System.IO.FileInfo(saveFile.FileName).Name;
+                        clicked_tab.Text = new FileInfo(saveFile.FileName).Name;
                         clicked_tab.Name = clicked_tab.Text;
                         fileStream.Close();
 
@@ -104,7 +107,7 @@ namespace redberry
 
         private void change_isResult(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("Вы уверены, что хотите поменять статус вкладки?", clicked_tab.Text, MessageBoxButtons.YesNo);
+            DialogResult result = MessageBox.Show(change_isResult_message[language], clicked_tab.Text, MessageBoxButtons.YesNo);
             if (result == DialogResult.Yes)
             {
                 ((tabTag)opened_tabs_control.SelectedTab.Tag).isResult ^= true;

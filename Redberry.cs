@@ -13,6 +13,7 @@ namespace redberry
         ushort border_width = 2;
         ushort min_blank = 2;
         bool Cancel = false;
+        static ushort language = 0;
 
         #endregion
 
@@ -20,8 +21,8 @@ namespace redberry
         {
             InitializeComponent();
             BackColor = Color.FromArgb(242, 242, 242);
-            this.SizeChanged += form_size_changed;
-            this.FormClosing += form_close;
+            SizeChanged += form_size_changed;
+            FormClosing += form_close;
             load_menu_strip();
             load_index_buttons();
             load_opened_tabs_control();

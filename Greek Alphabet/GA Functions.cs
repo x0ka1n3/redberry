@@ -7,6 +7,8 @@ namespace redberry
     {
         #region variables and controls
 
+        bool greek_alphabet_caps_checked = false;
+
         Button greek_alphabet_caps = new Button();
         Panel greek_alphabet_background = new Panel();
 
@@ -124,14 +126,14 @@ namespace redberry
             greek_alphabet_caps.FlatStyle = FlatStyle.Flat;
             greek_alphabet_caps.FlatAppearance.BorderColor = Color.Gray;
             greek_alphabet_caps.FlatAppearance.BorderSize = border_width;
-            greek_alphabet_caps.Text = "Строчные буквы";
+            greek_alphabet_caps.Text = greek_alphabet_caps_name_lowercase[language];
             greek_alphabet_caps.Click += greek_alphabet_caps_changed;
-            this.Controls.Add(greek_alphabet_caps);
+            Controls.Add(greek_alphabet_caps);
 
             greek_alphabet_background.Size = new Size(greek_alphabet_caps.Size.Width + 2 * min_blank, greek_alphabet_caps.Size.Height + 6 * alpha_button.Size.Height + 8 * min_blank);
             greek_alphabet_background.Visible = false;
             greek_alphabet_background.BackColor = Color.White;
-            this.Controls.Add(greek_alphabet_background);
+            Controls.Add(greek_alphabet_background);
         }
 
         private void reposition_greek_alphabet()
@@ -201,7 +203,7 @@ namespace redberry
 
             #region greek alphabet
 
-            if (greek_alphabet_caps.Text.Equals("Заглавные буквы"))
+            if (greek_alphabet_caps.Text.Equals(greek_alphabet_caps_name[language]))
             {
                 ALPHA_button.Visible = true;
                 BETA_button.Visible = true;

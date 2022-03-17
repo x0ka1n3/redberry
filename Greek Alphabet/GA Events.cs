@@ -17,15 +17,17 @@ namespace redberry
 
         private void greek_alphabet_caps_changed(object sender, EventArgs e)
         {
-            if (greek_alphabet_caps.Text.Equals("Строчные буквы"))
+            if (greek_alphabet_caps.Text.Equals(greek_alphabet_caps_name_lowercase[language]))
             {
-                greek_alphabet_caps.Text = "Заглавные буквы";
+                greek_alphabet_caps_checked = true;
+                greek_alphabet_caps.Text = greek_alphabet_caps_name[language];
                 hide_greek_alphabet();
                 visualize_greek_alphabet();
             }
             else
             {
-                greek_alphabet_caps.Text = "Строчные буквы";
+                greek_alphabet_caps_checked = false;
+                greek_alphabet_caps.Text = greek_alphabet_caps_name_lowercase[language];
                 hide_GREEK_alphabet();
                 visualize_greek_alphabet();
             }

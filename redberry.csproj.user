@@ -49,5 +49,8 @@
     <Compile Update="NumberedRTB\NumberedRTBAbo.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Update="Translations.cs">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
 </Project>
